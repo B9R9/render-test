@@ -2,6 +2,7 @@ const http = require('http')
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const path = require('path')
 
 const app = express()
 app.use(express.static('build'))
@@ -127,6 +128,10 @@ app.post('/api/persons', (request, response) => {
 
 
 app.use(unknownEndpoint)
+
+app.get('/*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
